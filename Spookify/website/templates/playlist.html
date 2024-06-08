@@ -1,7 +1,131 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
-{%block title%}Playlist{%endblock%}
+{% block title %}
+Playlist Generator
+{% endblock %}
 
-{%block content%}
-Create a new playlist
-{%endblock%}
+{% block content %}
+<div class="container">
+    <h1>Playlist Generator</h1>
+    <p>Welcome to the Playlist Generator! Customize your playlist by selecting your mood, tempo, lyrics preference, and
+        playlist name.</p>
+    <form id="playlistForm">
+        <div>
+            <label for="mood">Mood:</label>
+            <select id="mood" name="mood">
+                <option value="happy">Happy</option>
+                <option value="neutral">Neutral</option>
+                <option value="sad">Sad</option>
+            </select>
+        </div>
+        <div>
+            <label for="tempo">Tempo:</label>
+            <select id="tempo" name="tempo">
+                <option value="fast">Fast</option>
+                <option value="medium">Medium</option>
+                <option value="slow">Slow</option>
+            </select>
+        </div>
+        <div>
+            <label for="lyrics">Lyrics:</label>
+            <select id="lyrics" name="lyrics">
+                <option value="mixed">Mixed</option>
+                <option value="many">Many</option>
+                <option value="instruments">Instruments Only</option>
+            </select>
+        </div>
+        <div>
+            <label for="playlistName">Playlist Name:</label>
+            <input type="text" id="playlistName" name="playlistName" required>
+        </div>
+        <button type="submit">Generate</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('playlistForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const mood = document.getElementById('mood').value;
+        const tempo = document.getElementById('tempo').value;
+        const lyrics = document.getElementById('lyrics').value;
+        const playlistName = document.getElementById('playlistName').value;
+
+        // Here you can perform further actions like generating the playlist based on the selected options
+
+        // For demonstration purpose, let's just log the selected options
+        console.log('Mood:', mood);
+        console.log('Tempo:', tempo);
+        console.log('Lyrics:', lyrics);
+        console.log('Playlist Name:', playlistName);
+    });
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    p {
+        font-size: 1em;
+        margin-bottom: 20px;
+        color: #666;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form div {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 1em;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    select,
+    input[type="text"] {
+        font-size: 1em;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

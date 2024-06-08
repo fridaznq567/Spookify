@@ -1,12 +1,47 @@
-<!--TODO:
-this is the front page of the website
-should only be an inntroduction page
-add some text and pictures-->
+{% extends "base.html" %}
 
-{%extends "base.html"%}
+{% block title %}
+Home
+{% endblock %}
 
-{%block title%}Home{%endblock%}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to spookify!</h1>
+    <p class="lead">Create your own playlist forr free by telling us your prefences</p>
+    <hr class="my-4">
+    <p>This is the final DIS project created by William and Frida. Start creating by clicking the
+        playlist button above. To browse premade playlists, click the browse button. If you want to
+        save your playlist, you can create an account and log in.
+    </p>
+</div>
 
-{%block content%}
-This is the home page
-{%endblock%}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='img/cleaning.jpeg') }}" class="card-img-top" alt="cleaning">
+            <div class="card-body">
+                <h5 class="card-title">Find your cleaning</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='img/cat.jpeg') }}" class="card-img-top" alt="cat">
+            <div class="card-body">
+                <h5 class="card-title">Relax with music</h5>
+                <p class="card-text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='img/party.jpeg') }}" class="card-img-top" alt="party">
+            <div class="card-body">
+                <h5 class="card-title">Listen with others</h5>
+                <p class="card-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

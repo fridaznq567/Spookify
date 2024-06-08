@@ -1,11 +1,106 @@
-<!-- On this page we will store premade playlists
-TODO make playlists
-make it look nice -->
+{% extends "base.html" %}
 
-{%extends "base.html"%}
+{% block title %}
+Browse Playlists
+{% endblock %}
 
-{%block title%}Browse{%endblock%}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="display-4">Browse Playlists</h1>
+    <p class="lead">Explore pre-made playlists here.</p>
+</div>
 
-{%block content%}
-This will be the page where the user can browse through premade playlists
-{%endblock%}
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for playlist_id, playlist in playlists.items() %}
+            <tr>
+                <td>{{ playlist.name }}</td>
+                <td>
+                    <a href="{{ url_for('views.playlist', playlist_id=playlist_id) }}" class="btn btn-primary">View
+                        Playlist</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    p {
+        font-size: 1em;
+        margin-bottom: 20px;
+        color: #666;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody+tbody {
+        border-top: 2px solid #dee2e6;
+    }
+
+    .table .table {
+        background-color: #fff;
+    }
+
+    .btn-primary {
+        font-size: 1em;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
