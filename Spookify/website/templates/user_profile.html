@@ -6,6 +6,18 @@
 
 {% block content %}
 <div class="container mt-4">
+
+    <!-- Display flashed messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <div class="d-flex justify-content-between align-items-center">
         <h1>{{ user.name }}'s Profile</h1>
         {% if user in current_user.followed %}
@@ -48,7 +60,8 @@
             <ul class="list-group list-group-flush small">
                 {% for song in common_songs %}
                 <li class="list-group-item p-1">
-                    <a href="{{ url_for('views.song_details', song_id=song.id) }}">{{ song.song_name }} - {{ song.genre }}</a>
+                    <a href="{{ url_for('views.song_details', song_id=song.id) }}">{{ song.song_name }} - {{ song.genre
+                        }}</a>
                 </li>
                 {% endfor %}
             </ul>

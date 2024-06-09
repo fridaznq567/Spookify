@@ -6,6 +6,18 @@ Create Playlist
 
 {% block content %}
 <div class="container">
+
+    <!-- Display flashed messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <h1>Create Playlist</h1>
     <form method="POST">
         <div class="form-group">
@@ -47,7 +59,7 @@ Create Playlist
 </div>
 
 <script>
-    document.getElementById('useGenerator').addEventListener('change', function() {
+    document.getElementById('useGenerator').addEventListener('change', function () {
         const generatorOptions = document.getElementById('generatorOptions');
         if (this.checked) {
             generatorOptions.style.display = 'block';
