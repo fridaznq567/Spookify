@@ -77,11 +77,37 @@ def create_playlist():
     return render_template('create_playlist.html')
 
 
-@views.route('/playlists')
+@views.route('/playlists', methods=['GET'])
 @login_required
 def playlists():
     user_playlists = Playlist.query.filter_by(user_id=current_user.id).all()
     return render_template('playlists.html', playlists=user_playlists)
+
+
+@views.route('/delete-playlist/<int:playlist_id>', methods=['POST'])
+@login_required
+def delete_playlist(playlist_id):
+    # Ensure the playlist belongs to the current user
+    check_playlist_sql = text(
+        "SELECT * FROM playlist WHERE id = :playlist_id AND user_id = :user_id")
+    result = db.engine.execute(
+        check_playlist_sql, {'playlist_id': playlist_id, 'user_id': current_user.id})
+    playlist = result.fetchone()
+    if not playlist:
+        flash('Playlist not found or you do not have permission to delete it.', 'danger')
+        return redirect(url_for('views.playlists'))
+
+    # Delete associated playlist_song entries
+    delete_playlist_songs_sql = text(
+        "DELETE FROM playlist_song WHERE playlist_id = :playlist_id")
+    db.engine.execute(delete_playlist_songs_sql, {'playlist_id': playlist_id})
+
+    # Delete the playlist
+    delete_playlist_sql = text("DELETE FROM playlist WHERE id = :playlist_id")
+    db.engine.execute(delete_playlist_sql, {'playlist_id': playlist_id})
+
+    flash('Playlist deleted successfully!', 'success')
+    return redirect(url_for('views.playlists'))
 
 
 @views.route('/search')

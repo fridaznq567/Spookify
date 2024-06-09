@@ -12,9 +12,14 @@ My Playlists
         {% for playlist in playlists %}
         <li>
             <h3>{{ playlist.name }}</h3>
+            <form method="POST" action="{{ url_for('views.delete_playlist', playlist_id=playlist.id) }}"
+                style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
             <ul>
                 {% for playlist_song in playlist.playlist_songs %}
-                <li><a href="{{ url_for('views.song_details', song_id=playlist_song.song.id) }}">{{ playlist_song.song.song_name }}</a></li>
+                <li><a href="{{ url_for('views.song_details', song_id=playlist_song.song.id) }}">{{
+                        playlist_song.song.song_name }}</a></li>
                 {% endfor %}
             </ul>
         </li>
