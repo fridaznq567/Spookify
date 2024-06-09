@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create Playlist
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Create Playlist</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="playlistName">Playlist Name:</label>
+            <input type="text" id="playlistName" name="playlistName" class="form-control" required>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="useGenerator" name="useGenerator" checked>
+            <label class="form-check-label" for="useGenerator">Use Playlist Generator</label>
+        </div>
+        <div id="generatorOptions">
+            <div class="form-group">
+                <label for="mood">Mood:</label>
+                <select id="mood" name="mood" class="form-control">
+                    <option value="happy">Happy</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="sad">Sad</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tempo">Tempo:</label>
+                <select id="tempo" name="tempo" class="form-control">
+                    <option value="fast">Fast</option>
+                    <option value="medium">Medium</option>
+                    <option value="slow">Slow</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="lyrics">Lyrics:</label>
+                <select id="lyrics" name="lyrics" class="form-control">
+                    <option value="mixed">Mixed</option>
+                    <option value="many">Many</option>
+                    <option value="instruments">Instruments Only</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Playlist</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('useGenerator').addEventListener('change', function() {
+        const generatorOptions = document.getElementById('generatorOptions');
+        if (this.checked) {
+            generatorOptions.style.display = 'block';
+        } else {
+            generatorOptions.style.display = 'none';
+        }
+    });
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form div {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 1em;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    select,
+    input[type="text"] {
+        font-size: 1em;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

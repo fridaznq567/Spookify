@@ -6,8 +6,9 @@ Home
 
 {% block content %}
 <div class="jumbotron">
-    <h1 class="display-4">Welcome to spookify!</h1>
-    <p class="lead">Create your own playlist forr free by telling us your prefences</p>
+    <h1 class="display-4">Welcome to spookify{% if current_user.is_authenticated %}, {{ current_user.name }}{% endif %}!
+    </h1>
+    <p class="lead">Create your own playlist for free by telling us your preferences</p>
     <hr class="my-4">
     <p>This is the final DIS project created by William and Frida. Start creating by clicking the
         playlist button above. To browse premade playlists, click the browse button. If you want to
@@ -20,7 +21,7 @@ Home
         <div class="card">
             <img src="{{ url_for('static', filename='img/cleaning.jpeg') }}" class="card-img-top" alt="cleaning">
             <div class="card-body">
-                <h5 class="card-title">Find your cleaning</h5>
+                <h5 class="card-title">Find your cleaning jam</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
         </div>

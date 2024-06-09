@@ -8,6 +8,8 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         crossorigin="anonymous" />
+    <!-- Include Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
     <title>{% block title %}Home{% endblock %}</title>
 </head>
@@ -20,18 +22,77 @@
         <div class="collapse navbar-collapse" id="navbar">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" id="home" href="/">Home</a>
-                <a class="nav-item nav-link" id="logout" href="/login">Log in</a>
-                <a class="nav-item nav-link" id="signup" href="/signup">Sign up</a>
-                <a class="nav-item nav-link" id="playlist" href="/playlist">Playlist</a>
-                <a class="nav-item nav-link" id="browse" href="/browse">browse</a>
-
+                {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link" id="logout" href="{{ url_for('auth.logout') }}">Log out</a>
+                <a class="nav-item nav-link" id="playlists" href="{{ url_for('views.playlists') }}">My Playlists</a>
+                <a class="nav-item nav-link" id="create_playlist" href="{{ url_for('views.create_playlist') }}">Create Playlist</a>
+                <a class="nav-item nav-link" id="users" href="{{ url_for('views.users') }}">Users</a>
+                <a class="nav-item nav-link" id="profile" href="{{ url_for('views.user_profile', user_id=current_user.id) }}">My Profile</a>
+                {% else %}
+                <a class="nav-item nav-link" id="login" href="{{ url_for('auth.login') }}">Log in</a>
+                <a class="nav-item nav-link" id="signup" href="{{ url_for('auth.sign_up') }}">Sign up</a>
+                {% endif %}
+                <a class="nav-item nav-link" id="browse" href="{{ url_for('views.browse') }}">Browse</a>
             </div>
+            <form class="form-inline my-2 my-lg-0" action="{{ url_for('views.search') }}" method="GET">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="searchInput">
+                <div id="suggestions" class="dropdown-menu"></div>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
     </nav>
     <div class="container">
         {% block content %}
-
         {% endblock %}
+    </div>
+
+    <!-- Include Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value;
+            if (query.length > 1) {  
+                fetch(`/suggest?q=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const suggestions = document.getElementById('suggestions');
+                        suggestions.innerHTML = '';
+                        suggestions.style.display = 'block';
+                        data.forEach(item => {
+                            const div = document.createElement('div');
+                            div.className = 'dropdown-item';
+                            div.textContent = item;
+                            div.addEventListener('click', function() {
+                                document.getElementById('searchInput').value = this.textContent;
+                                suggestions.style.display = 'none';
+                                document.querySelector('form').submit(); // Submit the form when a suggestion is clicked
+                            });
+                            suggestions.appendChild(div);
+                        });
+                    });
+            } else {
+                document.getElementById('suggestions').style.display = 'none';
+            }
+        });
+    </script>
+    <style>
+        #suggestions {
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            z-index: 1000;
+            border: 1px solid #ccc;
+        }
+        .dropdown-item {
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
 </body>
 
 </html>

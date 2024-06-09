@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ user.name }}'s Profile
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>{{ user.name }}'s Profile</h1>
+        {% if user in current_user.followed %}
+        <a href="{{ url_for('views.unfollow', user_id=user.id) }}" class="btn btn-danger btn-sm">Unfollow</a>
+        {% else %}
+        <a href="{{ url_for('views.follow', user_id=user.id) }}" class="btn btn-primary btn-sm">Follow</a>
+        {% endif %}
+    </div>
+
+    {% if most_common_genre %}
+    <p><strong>Most Common Genre:</strong> {{ most_common_genre }}</p>
+    {% endif %}
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h5>Playlists</h5>
+            <ul class="list-group list-group-flush small">
+                {% for playlist in playlists %}
+                <li class="list-group-item p-1">
+                    <a href="{{ url_for('views.view_playlist', playlist_id=playlist.id) }}">{{ playlist.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h5>Following</h5>
+            <ul class="list-group list-group-flush small">
+                {% for followed_user in followed_users %}
+                <li class="list-group-item p-1">
+                    <a href="{{ url_for('views.user_profile', user_id=followed_user.id) }}">{{ followed_user.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <h5>Common Tracks</h5>
+            <ul class="list-group list-group-flush small">
+                {% for song in common_songs %}
+                <li class="list-group-item p-1">
+                    <a href="{{ url_for('views.song_details', song_id=song.id) }}">{{ song.song_name }} - {{ song.genre }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

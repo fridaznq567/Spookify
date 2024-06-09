@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Playlists
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>My Playlists</h2>
+    {% if playlists %}
+    <ul>
+        {% for playlist in playlists %}
+        <li>
+            <h3>{{ playlist.name }}</h3>
+            <ul>
+                {% for playlist_song in playlist.playlist_songs %}
+                <li><a href="{{ url_for('views.song_details', song_id=playlist_song.song.id) }}">{{ playlist_song.song.song_name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no playlists.</p>
+    {% endif %}
+</div>
+{% endblock %}

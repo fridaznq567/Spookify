@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ playlist.name }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ playlist.name }}</h1>
+    <h2>Tracks</h2>
+    <ul class="list-group">
+        {% for song in songs %}
+        <li class="list-group-item">{{ song.song_name }} - {{ song.artist_name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
