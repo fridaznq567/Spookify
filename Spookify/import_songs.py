@@ -1,6 +1,7 @@
 import csv
 from website import create_app, db
 from website.models import Song
+import os
 
 app = create_app()
 
@@ -31,7 +32,6 @@ def import_songs(csv_file):
 
 
 if __name__ == '__main__':
-    import_songs(
-        r'/Users/fridaalm/Downloads/Spookify/Spookify/dataset_music/genres_v2.csv')
-    # Alternatively, use forward slashes:
-    # import_songs('C:/Users/willi/Desktop/dis/Spookify/Spookify/Spookify/dataset_music/genres_v2.csv')
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_file_path = os.path.join(current_dir, 'genres_v2.csv')
+    import_songs(csv_file_path)
