@@ -6,4 +6,4 @@ We have worked with the database found here: https://www.kaggle.com/datasets/mrm
 
 To run the project please read Spookify/README.txt
 
-You can find our E/R model under meta/model
+You can find our E/R model under meta/model.pdf
