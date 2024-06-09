@@ -19,7 +19,6 @@ def import_songs(csv_file):
                             danceability=float(row['danceability']),
                             energy=float(row['energy']),
                             valence=float(row['valence']),
-                            # Include speechiness
                             speechiness=float(row['speechiness']),
                             tempo=float(row['tempo']),
                             duration_ms=int(row['duration_ms']),

@@ -21,7 +21,7 @@ def create_playlist():
         playlist_name = request.form.get('playlistName')
         use_generator = 'useGenerator' in request.form
 
-        # Create the playlist using raw SQL
+        # Create playlist according to user input
         create_playlist_sql = text("""
             INSERT INTO playlist (name, user_id) VALUES (:name, :user_id) RETURNING id;
         """)
@@ -63,7 +63,7 @@ def create_playlist():
             result = db.engine.execute(filter_songs_sql, params)
             songs = result.fetchall()
 
-            # Add songs to the playlist using raw SQL
+            # Add songs to the playlist
             add_song_to_playlist_sql = text("""
                 INSERT INTO playlist_song (playlist_id, song_id) VALUES (:playlist_id, :song_id)
             """)
